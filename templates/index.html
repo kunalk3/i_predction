@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<style>
+    body{
+        background-color: #2E2E2E;
+    }
+</style>
+
+<body>
+    <nav class="navbar navbar-light bg-primary fixed-top">
+      <div class="container-fluid" text-white>
+            <button class="btn btn-mg btn-outline-dark" type="button">Home</button>
+          <B><small span class="navbar-text" style="color:white">Predictive Analytics for Inventory Management Stock Status Application V2.0</small></B>
+      </div>
+    </nav>
+</body>
+
+<div class="container-fluid " style="margin-top: 75px">
+    <div class="mx-auto" style="width: 950px;">
+        <div class="card border-primary text-dark mb-3" style="width: 950px;">
+            <div class="card-header">Predictive Analytics for Smart Retailers using ML... &nbsp;
+                <a href="https://www.linkedin.com/in/kunalkolhe3" class="fa fa-linkedin-square" style="font-size:24px"></a>&nbsp;
+                <a href="https://github.com/kunalk3" class="fa fa-github-square" style="font-size:24px"></a>
+            </div>
+            <div class="card-body">
+                <h2 class="card-title">Products Stock Inventory Management Status Application</h2>
+                <p class="card-text">All the fields are mandatory.</p>
+                <br>
+                <!-- Form fields -->
+                <div class="mx-auto" style="width: 900px">
+                    <form action="{{ url_for('predict')}}" method="post">
+                        <div class="form-row">
+
+                            <!-- Product_Type + Product_Cost + Revenue + Days_Of_Week -->
+                            <div class="form-group col-md-3" id="product_type">
+                                <h5 label for="product_type">Product Type ID</h5>
+                                <input type="number" class="form-control" name="product_type" min="1" max="1115" placeholder="Enter product type" required="required">
+                                <p class="card-text" style="font-size:12px;">Enter the product type id.<br> Range : (1 to 1115)</p>
+                            </div>
+                            <div class="form-group col-md-3" id="cost_per_unit">
+                                <h5 label for="cost_per_unit">Product Cost ($)</h5>
+                                <input type="number" class="form-control" name="cost_per_unit" min="50" max="9999" placeholder="Enter product cost ($)" required="required">
+                                <p class="card-text" style="font-size:12px;">Enter the product cost in $.<br> Range : (50 to 1999)</p>
+                            </div>
+                            <div class="form-group col-md-3" id="revenue">
+                                <h5 label for="revenue">Product Revenue</h5>
+                                <input type="number" class="form-control" name="revenue" min="1" max="9999" placeholder="Enter product revenue" required="required">
+                                <p class="card-text" style="font-size:12px;">Enter the Revenue details in $.</p>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <h5 label for="day_of_week">Days of week</h5>
+                                <select class="custom-select" name="day_of_week" id="day_of_week" required="required">
+                                    <<option value=1>Monday (1)</option>
+                                    <option value=2>Tuesday (2)</option>
+                                    <option value=3>Wednesday (3)</option>
+                                    <option value=4>Thursday (4)</option>
+                                    <option value=5>Friday(5)</option>
+                                    <option value=6>Saturday (6)</option>
+                                    <option value=7>Sunday (7)</option>
+                                </select>
+                                <p class="card-text" style="font-size:12px;">Enter the day.<br> Range : (Monday to Sunday)</p>
+                            </div>
+                            <br>
+
+                        <div class="form-group col-md-3" id = "generic_holiday">
+                            <h5 label for="generic_holiday">Generic Holiday</h5>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="generic_holiday" id="inlineRadio1" value=1 checked="checked" value=1>
+                                <label class="form-check-label" for="inlineRadio1">Yes</label>
+                            </div>&nbsp;&nbsp;
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="generic_holiday" id="inlineRadio2" value=2>
+                                <label class="form-check-label" for="inlineRadio2">No</label>
+                            </div>
+                            <p class="card-text" style="font-size:12px;">Select the generic holiday status.<br> Range : (Yes / No)</p>
+                        </div>
+                        <div class="form-group col-md-4">
+                                <h5 label for="time_delivery">Expected Delivery Time (Days)</h5>
+                                <select class="custom-select" name="time_delivery" id="time_delivery" required="required">
+                                    <<option value="5">5</option>
+                                    <<option value="6">6</option>
+                                    <<option value="7">7</option>
+                                    <<option value="8">8</option>
+                                    <<option value="9">9</option>
+                                    <<option value="10">10</option>
+                                    <<option value="11">11</option>
+                                    <<option value="12">12</option>
+                                    <<option value="13">13</option>
+                                    <<option value="14">14</option>
+                                </select>
+                                <p class="card-text" style="font-size:12px;">Enter the delivery days.<br> Range : (5 days to 14 days)</p>
+                            </div>
+
+                        </div><br>
+
+
+                        <button type="submit" class="btn btn-primary btn-mg"><i>Predict the status</i></button><br><br>
+ 
+                        <h4>The Product Stocks that to be maintain : {{ prediction_text }}</h4>
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row bg-dark text-white fixed-bottom" style="height: 20px;">
+        <div class="col-sm-12 make-center"><small>Copyright @ 2021 - All Rights Reserved - Kunal K.</small></div>
+    </div>
+</div>
+
+</body>
+</html>
